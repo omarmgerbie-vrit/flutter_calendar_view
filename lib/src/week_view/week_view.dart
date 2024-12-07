@@ -499,6 +499,9 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
               _weekHeaderBuilder(
                 _currentStartDate,
                 _currentEndDate,
+                onNext: nextPage,
+                onPrevious: previousPage,
+                jumpToWeek: jumpToWeek,
               ),
               Expanded(
                 child: DecoratedBox(
@@ -820,8 +823,11 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   /// [widget.dayTitleBuilder] is null.
   Widget _defaultWeekPageHeaderBuilder(
     DateTime startDate,
-    DateTime endDate,
-  ) {
+    DateTime endDate, {
+    VoidCallback? onNext,
+    VoidCallback? onPrevious,
+    void Function(DateTime date)? jumpToWeek,
+  }) {
     return WeekPageHeader(
       startDate: _currentStartDate,
       endDate: _currentEndDate,
@@ -839,7 +845,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
           );
 
           if (selectedDate == null) return;
-          jumpToWeek(selectedDate);
+          this.jumpToWeek(selectedDate);
         }
       },
       headerStringBuilder: widget.headerStringBuilder,

@@ -21,6 +21,34 @@ class DayViewWidget extends StatelessWidget {
       startDuration: Duration(hours: 8),
       showHalfHours: true,
       heightPerMinute: 3,
+      dayTitleBuilder: (date, {onNext, onPrevious, jumpToDate}) {
+        return Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: onPrevious,
+              ),
+              Text(
+                "${date.day} ${date.month} ${date.year}",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.arrow_forward_ios),
+                onPressed: onNext,
+              ),
+            ],
+          ),
+        );
+      },
       timeLineBuilder: _timeLineBuilder,
       scrollPhysics: const BouncingScrollPhysics(),
       eventArranger: SideEventArranger(maxWidth: 30),

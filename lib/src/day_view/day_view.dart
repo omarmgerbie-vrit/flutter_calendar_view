@@ -39,7 +39,7 @@ class DayView<T extends Object?> extends StatefulWidget {
   /// [WeekPageHeader] widgets provided by this package with your custom
   /// configurations.
   ///
-  final DateWidgetBuilder? dayTitleBuilder;
+  final DateTitleWidgetBuilder? dayTitleBuilder;
 
   /// Builds custom PressDetector widget
   ///
@@ -333,7 +333,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
 
   late EventTileBuilder<T> _eventTileBuilder;
 
-  late DateWidgetBuilder _dayTitleBuilder;
+  late DateTitleWidgetBuilder _dayTitleBuilder;
 
   late FullDayEventBuilder<T> _fullDayEventBuilder;
 
@@ -442,7 +442,10 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              _dayTitleBuilder(_currentDate),
+              _dayTitleBuilder(_currentDate,
+                  onNext: nextPage,
+                  onPrevious: previousPage,
+                  jumpToDate: jumpToDate),
               Expanded(
                 child: DecoratedBox(
                   decoration: BoxDecoration(color: widget.backgroundColor),
@@ -680,7 +683,10 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
   /// Default view header builder. This builder will be used if
   /// [widget.dayTitleBuilder] is null.
   ///
-  Widget _defaultDayBuilder(DateTime date) {
+  Widget _defaultDayBuilder(DateTime date,
+      {VoidCallback? onNext,
+      VoidCallback? onPrevious,
+      void Function(DateTime date)? jumpToDate}) {
     return DayPageHeader(
       date: _currentDate,
       dateStringBuilder: widget.dateStringBuilder,
@@ -698,7 +704,7 @@ class DayViewState<T extends Object?> extends State<DayView<T>> {
           );
 
           if (selectedDate == null) return;
-          jumpToDate(selectedDate);
+          this.jumpToDate(selectedDate);
         }
       },
       headerStyle: widget.headerStyle,
