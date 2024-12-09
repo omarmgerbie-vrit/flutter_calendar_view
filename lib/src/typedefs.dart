@@ -36,6 +36,11 @@ typedef WeekDayBuilder = Widget Function(
 
 typedef DateWidgetBuilder = Widget Function(DateTime date);
 
+typedef DateMonthWidgetBuilder = Widget Function(DateTime date,
+    {VoidCallback? onNext,
+    VoidCallback? onPrevious,
+    void Function(DateTime date)? jumpToMonth});
+
 typedef DateTitleWidgetBuilder = Widget Function(DateTime date,
     {VoidCallback? onNext,
     VoidCallback? onPrevious,

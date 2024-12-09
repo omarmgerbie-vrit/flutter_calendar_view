@@ -28,7 +28,7 @@ class MonthView<T extends Object?> extends StatefulWidget {
   /// [WeekPageHeader] widgets provided by this package with your custom
   /// configurations.
   ///
-  final DateWidgetBuilder? headerBuilder;
+  final DateMonthWidgetBuilder? headerBuilder;
 
   /// This function will generate DateString in the calendar header.
   /// Useful for I18n
@@ -240,7 +240,7 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
 
   late WeekDayBuilder _weekBuilder;
 
-  late DateWidgetBuilder _headerBuilder;
+  late DateMonthWidgetBuilder _headerBuilder;
 
   EventController<T>? _controller;
 
@@ -507,7 +507,10 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
   }
 
   /// Default month view header builder
-  Widget _defaultHeaderBuilder(DateTime date) {
+  Widget _defaultHeaderBuilder(DateTime date,
+      {VoidCallback? onNext,
+      VoidCallback? onPrevious,
+      void Function(DateTime date)? jumpToMonth}) {
     return MonthPageHeader(
       onTitleTapped: () async {
         if (widget.onHeaderTitleTap != null) {
@@ -521,7 +524,7 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
           );
 
           if (selectedDate == null) return;
-          jumpToMonth(selectedDate);
+          this.jumpToMonth(selectedDate);
         }
       },
       onPreviousMonth: previousPage,
