@@ -333,7 +333,10 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
           children: [
             Container(
               width: _width,
-              child: _headerBuilder(_currentDate),
+              child: _headerBuilder(_currentDate,
+                  onNext: nextPage,
+                  onPrevious: previousPage,
+                  jumpToMonth: jumpToMonth),
             ),
             Expanded(
               child: PageView.builder(
